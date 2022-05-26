@@ -19,7 +19,7 @@ You need to hava as input data:
 - n= number of parameter
 - alfa= significance level
 
-To use the function you hae to:
+To use the function you have to:
 1. dowload the repository in your project folder
 2. import the function in your code:
 ```python
