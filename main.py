@@ -6,7 +6,9 @@ Created on Wed May 25 00:42:18 2022
 """
 
 
-#main#
+#MAIN#
+#simple example to show how the library works
+
 import numpy as np
 from library_eloo import eloo
 
