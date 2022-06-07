@@ -3,6 +3,14 @@
 **Version 1.0.0**
 
 This repository contains the code to perform an efficient numerical leave one out procedure for data that you can be split into uncorrelated blocks. 
+'In Least Squares (LS), the linearized functional 1model between M observables and N unknown parameters is given. LS provides estimates of parameters, observables,residuals and a posteriori variance. To identify outliers and to estimate accuracies and reliabilities, tests on the model and on the individual residuals can be performed at different levels of significance and power. However, LS is not robust: one outlier could be spread into all the residuals and its identification is difficult.
+A possible solution to this problem is given by a Leave One Block Out approach. Let’s suppose that the observation vector can be decomposed into m sub-vectors (blocks) that are reciprocally uncorrelated: in the case of completely uncorrelated observations, m = M. A suspected block is excluded from the adjustment, whose results are used to check it. Clearly, the check is more robust, because one outlier in the excluded block does not affect the adjustment results. 
+The process can be repeated on all the blocks, but can be very slow, because m adjustments must be computed. To efficiently apply Leave One Block Out, an algorithm has been studied. The usual LS adjustment is performed on all the observations to obtain the ’batch’ results. The contribution of each block is subtracted from the batch results by algebraic decompositions, with a minimal computational effort: this holds for parameters, a posteriori residuals and variance.'
+
+library_eloo.py contains:
+- split_block = function to split the input matrices and arrays into blocks
+- least_squares_blocks= function that compute the LS solution with a block approach
+- eloo= functino that performs the numerical leave one out 
 
 ## Instructions
 To run this code you need the following libraries:
@@ -23,7 +31,7 @@ To use the function you have to:
 1. dowload the repository in your project folder
 2. import the function in your code:
 ```python
- from library_eloo import eloo
+ from geoinformatic_project.library_eloo import eloo
 ```
 4. then you can call the function as follow:
 ```python
