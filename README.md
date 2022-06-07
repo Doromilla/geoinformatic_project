@@ -2,7 +2,7 @@
 
 **Version 1.0.0**
 
-This repository contains the code to perform an efficient numerical leave one out procedure for data that you can be split into uncorrelated blocks. 
+This repository contains the code to perform an efficient numerical leave one out procedure for data that can be split into uncorrelated blocks. 
 'In Least Squares (LS), the linearized functional 1model between M observables and N unknown parameters is given. LS provides estimates of parameters, observables,residuals and a posteriori variance. To identify outliers and to estimate accuracies and reliabilities, tests on the model and on the individual residuals can be performed at different levels of significance and power. However, LS is not robust: one outlier could be spread into all the residuals and its identification is difficult.
 A possible solution to this problem is given by a Leave One Block Out approach. Let’s suppose that the observation vector can be decomposed into m sub-vectors (blocks) that are reciprocally uncorrelated: in the case of completely uncorrelated observations, m = M. A suspected block is excluded from the adjustment, whose results are used to check it. Clearly, the check is more robust, because one outlier in the excluded block does not affect the adjustment results. 
 The process can be repeated on all the blocks, but can be very slow, because m adjustments must be computed. To efficiently apply Leave One Block Out, an algorithm has been studied. The usual LS adjustment is performed on all the observations to obtain the ’batch’ results. The contribution of each block is subtracted from the batch results by algebraic decompositions, with a minimal computational effort: this holds for parameters, a posteriori residuals and variance.'
