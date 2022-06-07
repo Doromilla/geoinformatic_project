@@ -11,7 +11,9 @@ The process can be repeated on all the blocks, but can be very slow, because m a
 library_eloo.py contains:
 - split_block = function to split the input matrices and arrays into blocks
 - least_squares_blocks= function that compute the LS solution with a block approach
-- eloo= functino that performs the numerical leave one out 
+- eloo= functino that performs the numerical leave one out
+
+main.py contains a very simple example of how the algorithm works
 
 ## Instructions
 To run this code you need the following libraries:
