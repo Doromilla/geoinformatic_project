@@ -124,7 +124,7 @@ def eloo(A,Q,y, d, alfa, M,n):
         Ck = np.dot(np.dot(Ak[i],N_inv),Ak_tran)
         Mk = (Qk[i] - Ck)
         
-# ======================check if i can perform the outlier rejection==================================
+# ====================== this check is not implemented yet ==================================
 #         #checking if the block depends on an individual parameter
 #         if (sum(sum(Mk== np.zeros(dim[i],dim[i])))==dim[i]*dim[i])
 #           print('WARNING!! Block',i,'cannot be checked. It is essential to the estimation')
