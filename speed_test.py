@@ -6,7 +6,7 @@ Created on Fri Jun 17 23:27:53 2022
 """
 ############################## SPEED TEST ##################################
 
-# The aim of this code is to test the efficiency of eloo end loo with respect to the 
+# The aim of this code is to test the efficiency of elobo end lobo with respect to the 
 # operational time with different combination of number of parameters (n) and number of blocks (m).
 # M=2000  number of observation are generated with the following model and adding a 
 # random noise with standar deviation of 0.1 
@@ -19,8 +19,8 @@ Created on Fri Jun 17 23:27:53 2022
 #IMPORTING LIBRARIES
 # numpy for matrices operations
 import numpy as np
-#import eloo functions
-import library_eloo  as lib
+#import elobo functions
+import library_elobo  as lib
 # function to count the time
 from timeit import default_timer as timer
 
@@ -37,13 +37,13 @@ alfa = 0.5
 
 y = np.ones((M,1))
 y_0= {}
-time_eloo = 0
-time_loo = 0
+time_elobo = 0
+time_lobo = 0
 time_ratio = np.empty((len(n),len(m),))
 time_ratio [:] = np.nan
 
 for j in range(len(n)):
-    print('n',n[j])
+    print('n',n[j]) 
     #creating the design matrix
     R= np.identity(n[j]) # repeated matrix in the design matrix accondig to n
     A=R
@@ -67,39 +67,17 @@ for j in range(len(n)):
             y_0[i] = y + noise
             
         
-            #outlier rejection with eloo
+            #outlier rejection with elobo
             start1 = timer()
-            x_fin, Cxx, y_fin,Cyy, v_fin, Cvv, s2_fin, k_mak = lib.eloo(A, Q, y, d, alfa, M, n[j])
+            x_fin, Cxx, y_fin,Cyy, v_fin, Cvv, s2_fin, k_mak = lib.elobo(A, Q, y, d, alfa, M, n[j])
             end1 = timer()
-            time_eloo= time_eloo + (end1 - start1)
+            time_elobo= time_elobo + (end1 - start1)
             
-            #outlier rejection with loo
+            #outlier rejection with lobo
             start2 = timer()
-            x_fin, Cxx, y_fin,Cyy, v_fin, Cvv, s2_fin, k_mak = lib.classic_loo(A, Q, y, d, alfa, M, n[j])
+            x_fin, Cxx, y_fin,Cyy, v_fin, Cvv, s2_fin, k_mak = lib.classic_lobo(A, Q, y, d, alfa, M, n[j])
             end2 = timer()
-            time_loo= time_loo + (end2 - start2)
+            time_lobo= time_lobo + (end2 - start2)
             
-        time_ratio[j][k] = time_loo/time_eloo
-    
-    
-    
-    
-    
-    
-    
-
-
-
-      
-        
-        
-     
-
-
-
-
-
-    
-
-    
+        time_ratio[j][k] = time_lobo/time_elobo
     
