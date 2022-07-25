@@ -7,7 +7,7 @@ Created on Sun Jul 10 15:36:20 2022
 
 ############################## RELIABILITY TEST ##################################
 
-# The aim of this code is to test the reliability of eloo and repeated loo 
+# The aim of this code is to test the reliability of elobo and repeated lobo 
 # Let's define an image1 of 1000*1000 and take a regular grid of 25 points  
 # with coordinates (i1,j1) on it
 # An image2 is obtained by the transformation of image1 with the following model:
@@ -16,7 +16,7 @@ Created on Sun Jul 10 15:36:20 2022
 # 1000 adjustments, with independently generated noise have been iterated 
 # for different levels of outliers: 1.5, 1.75, 2.00, 2.50, 3.00, 3.50 and 4.0 pixels
 # All the statistical tests have been performed with a significance level α = 0.01. 
-# Both for the classical LS tests and for ELOO, the results have been clustered 
+# Both for the classical LS tests and for Elobo, the results have been clustered 
 # in three classes:
 # • {LS/ELOBO}_OK: correct identification of the outlier,
 # • {LS/ELOBO}_NO: no outlier is identified by the test,
@@ -24,7 +24,7 @@ Created on Sun Jul 10 15:36:20 2022
 
 import numpy as np
 import matplotlib.pyplot as plt
-import library_eloo as lib
+import library_elobo as lib
 
 ######## characteristic of the control points on the image:
 #number of CP
@@ -98,9 +98,9 @@ px_error = 3
 ls_ok = 0 
 ls_no = 0
 ls_wo = 0
-eloo_ok = 0 
-eloo_no = 0
-eloo_wo = 0
+elobo_ok = 0 
+elobo_no = 0
+elobo_wo = 0
 
 for rep in range(3):
     I2_obs = np.zeros(n)
@@ -123,8 +123,8 @@ for rep in range(3):
         x_cap, y_cap, N_inv, vk_cap, s2_cap = lib.least_squares_blocks(A,I2_obs,Ak,Qk,yk,dim, first_raw, M, n)
         
         
-        #snooping wit loo
-        x_fin, Cxx, y_fin,Cyy, v_fin, Cvv, s2_fin, k_max = lib.classic_loo(A, Q, I2_obs, d, alfa, M, n)
+        #snooping wit lobo
+        x_fin, Cxx, y_fin,Cyy, v_fin, Cvv, s2_fin, k_max = lib.classic_lobo(A, Q, I2_obs, d, alfa, M, n)
        
         if k_max == 9999:
             ls_no = ls_no +1;
@@ -133,16 +133,13 @@ for rep in range(3):
         else:
             ls_wo = ls_wo +1;   
         
-        #snooping with eloo
-        x_fin, Cxx, y_fin, Cyy, v_fin, Cvv, s2_fin, k_max = lib.eloo(A, Q, I2_obs, d, alfa, M, n)
+        #snooping with elobo
+        x_fin, Cxx, y_fin, Cyy, v_fin, Cvv, s2_fin, k_max = lib.elobo(A, Q, I2_obs, d, alfa, M, n)
          #computing statistics
         if k_max == 999:
-            eloo_no = eloo_no +1;
+            elobo_no = elobo_no +1;
         elif k_max == outlier_pos + 1:
-            eloo_ok = eloo_ok +1;
+            elobo_ok = elobo_ok +1;
         else:
-            eloo_wo = eloo_wo +1;
+            elobo_wo = elobo_wo +1;
        
-        
-        
-        
