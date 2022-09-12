@@ -25,6 +25,7 @@ speed_test performs a numerical test to explore the operational time with differ
 To run this code you need the following libraries:
 - numpy
 - scipy.stat
+- timeit
 
 You need to hava as input data:
 - all the matrices of your linear or linearized problem 
