@@ -5,23 +5,21 @@ Created on Wed May 25 00:42:18 2022
 @author: teari
 """
 
-
-#MAIN#
-#simple example to show how the library works
-
+# MAIN#
+# simple example to show if the library works
 import numpy as np
-from library_elobo import lib
+import library_elobo as lib
 
-#fake data input
-y= np.array([3.01,3.98,4.99,5.56,7.01,7.99,9.02])
-d= np.array([3,4])
-A= np.array([[1,1], [2,1], [3,1], [4,1], [5,1], [6,1], [7,1]])
-Q= np.array([[1,0,0,0,0,0,0],[0,1,0,0,0,0,0],[0,0,1,0,0,0,0],[0,0,0,2,0,0,0],[0,0,0,0,2,0,0],[0,0,0,0,0,2,0],[0,0,0,0,0,0,2]]);
-n= len(A[1])
-M= len(A)
-alfa= 0.5
-
-
+# fake data input
+y = np.array([3.01, 3.98, 4.99, 5.56, 7.01, 7.99, 9.02])
+d = np.array([3, 4])
+A = np.array([[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1]])
+Q = np.array([
+    [1, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 2, 0, 0, 0], [0, 0, 0, 0, 2, 0, 0],
+     [0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2]])
+n = len(A[1])
+M = len(A)
+alfa = 0.5
 
 # ====================== test of the other two functions=======================
 # Ak, Qk, yk, dim, first_raw= split_blocks(A,Q,y,d,n)
@@ -29,6 +27,6 @@ alfa= 0.5
 # =============================================================================
 
 
-x_fin, Cxx, y_fin,Cyy, v_fin, Cvv, s2_fin, k_mak = lib.elobo(A, Q, y, d, alfa, M, n)
+x_fin, Cxx, y_fin, Cyy, v_fin, Cvv, s2_fin, k_max = lib.elobo(A, Q, y, d, alfa, M, n)
 
-s2 = lib.classic_lobo(A, Q, y, d, alfa, M, n,)
+s2 = lib.classic_lobo(A, Q, y, d, alfa, M, n)
