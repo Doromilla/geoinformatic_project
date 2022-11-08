@@ -338,6 +338,10 @@ def classic_lobo(A, Q, y, d, alfa, M, n):
 # s2_ap = a priori variance
 # s2_cap= estimated variance
 # vk_cap= dictionary of the estimated residuals removed the k-th block
+# alfa= significance level
+# M= number of observation
+# n= number of parameters
+# first_raw = dictionary storing the raw from which each block starts
 # OUTPUT:
 # outlier_pos: position of the outlier block
 
