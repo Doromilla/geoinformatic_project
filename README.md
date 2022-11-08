@@ -45,6 +45,6 @@ To use the function you have to:
 ```
 4. then you can call the function as follow:
 ```python
- x_fin, Cxx, y_fin, Cyy, v_fin, Cvv, s2_fin, k_mak = elobo(A, Q, y, d, alfa, M, n)
+ x_fin, Cxx, y_fin, Cyy, v_fin, Cvv, s2_fin, k_max = elobo(A, Q, y, d, alfa, M, n)
 ```
 
