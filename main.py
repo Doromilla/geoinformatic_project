@@ -19,14 +19,14 @@ Q = np.array([
      [0, 0, 0, 0, 0, 2, 0], [0, 0, 0, 0, 0, 0, 2]])
 n = len(A[1])
 M = len(A)
-alfa = 0.5
-
-# ====================== test of the other two functions=======================
-# Ak, Qk, yk, dim, first_raw= split_blocks(A,Q,y,d,n)
-# x_cap, y_cap, N_inv, vk_cap, s2_cap = least_squares_blocks(A,y,Ak,Qk,yk,dim, first_raw, M, n)
-# =============================================================================
-
+alfa = 0.05
+sigma = 0.5
 
 x_fin, Cxx, y_fin, Cyy, v_fin, Cvv, s2_fin, k_max = lib.elobo(A, Q, y, d, alfa, M, n)
+x_fin, Cxx, y_fin, Cyy, v_fin, Cvv, s2_fin, k_max = lib.classic_lobo(A, Q, y, d, alfa, M, n)
 
-s2 = lib.classic_lobo(A, Q, y, d, alfa, M, n)
+Ak, Qk, yk, dim, first_raw = lib.split_blocks(A, Q, y, d)
+x_cap, y_cap, N_inv, vk_cap, s2_cap = lib.least_squares_blocks(A, y, Ak, Qk, yk, dim, first_raw, M, n)
+outlier_pos = lib.outlier_ls(sigma, s2_cap, vk_cap, alfa, M, n,first_raw)
+print('THE EDN')
+

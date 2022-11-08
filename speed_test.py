@@ -74,6 +74,7 @@ for j in range(len(n)):
             x_fin, Cxx, y_fin, Cyy, v_fin, Cvv, s2_fin, k_mak = lib.classic_lobo(A, Q, y_0[i], d, alfa, M, n[j])
             end2 = timer()
             time_lobo = time_lobo + (end2 - start2)
+            print(time_lobo)
 
         time_ratio[j][k] = time_lobo / time_elobo
 print("The end")

@@ -1,6 +1,7 @@
 # importing libraries
 import numpy as np
 from scipy.stats import f
+from scipy.stats import chi2
 
 
 ################################## split_block  #####################################
@@ -18,7 +19,7 @@ from scipy.stats import f
 # first_raw = dictionary storing the raw from which each block starts
 # dim= dictionary storing the dimension of each block
 
-def split_blocks(A, Q, y, d, n):
+def split_blocks(A, Q, y, d):
     # creation of the dictionary dim
     dim = {}
     for i in range(len(d)):
@@ -128,7 +129,7 @@ def copy(matrix, i):
 
 def elobo(A, Q, y, d, alfa, M, n):
     # calling the function to split in blocks
-    Ak, Qk, yk, dim, first_raw = split_blocks(A, Q, y, d, n)
+    Ak, Qk, yk, dim, first_raw = split_blocks(A, Q, y, d)
     # calling the function to solve the least squares problem with blocks
     x_cap, y_cap, N_inv, vk_cap, s2_cap = least_squares_blocks(A, y, Ak, Qk, yk, dim, first_raw, M, n)
 
@@ -136,7 +137,6 @@ def elobo(A, Q, y, d, alfa, M, n):
     x_mk = {}
     s2_mk = {}
     F_ratio = {}
-    Fk_lim = {}
     for i in dim:
         Ak_tran = Ak[i].transpose()
         Ck = np.dot(np.dot(Ak[i], N_inv), Ak_tran)
@@ -176,6 +176,7 @@ def elobo(A, Q, y, d, alfa, M, n):
     # checking if the block with the higher ratio is an outlier
     if np.abs((F_ratio[k_max]) < Fkmax_lim):
         print('No outlier detected')
+        dim_fin = dim
         A_fin = A
         Q_fin = Q
         N_inv_fin = N_inv
@@ -247,9 +248,9 @@ def elobo(A, Q, y, d, alfa, M, n):
 # k_max= key of the block with the maximum ratio => outlier
 
 
-def classic_lobo(A, Q, y, d, alfa, M, n, ):
+def classic_lobo(A, Q, y, d, alfa, M, n):
     # calling the function to split in blocks
-    Ak, Qk, yk, dim, first_raw = split_blocks(A, Q, y, d, n)
+    Ak, Qk, yk, dim, first_raw = split_blocks(A, Q, y, d)
     # compute the global solution
     x_cap, y_cap, N_inv, w_cap, s2_cap = least_squares_blocks(A, y, Ak, Qk, yk, dim, first_raw, M, n)
 
@@ -288,6 +289,7 @@ def classic_lobo(A, Q, y, d, alfa, M, n, ):
     # checking if the block with the higher ratio is an outlier
     if np.abs((F_ratio[k_max]) < Fkmax_lim):
         print('No outlier detected')
+        dim_fin = dim
         A_fin = A
         Q_fin = Q
         N_inv_fin = N_inv
@@ -327,3 +329,35 @@ def classic_lobo(A, Q, y, d, alfa, M, n, ):
 
 
     return x_fin, Cxx, y_fin, Cyy, v_fin, Cvv, s2_fin, k_max
+
+#################################### outlier_ls #########################################
+# function that finds the outlier from the global least square solution
+# it identify the presence of an outlier with a chi-square test
+# and if present the as outlier is taken the block with the higher residual
+# INPUT:
+# s2_ap = a priori variance
+# s2_cap= estimated variance
+# vk_cap= dictionary of the estimated residuals removed the k-th block
+# OUTPUT:
+# outlier_pos: position of the outlier block
+
+def outlier_ls(s2_ap,s2_cap, vk_cap, alfa,M,n,first_raw):
+
+    #perform the chi-square test
+    chi2_cap = float(s2_cap)*(M-n)/(s2_ap**2)
+    chi2_lim = chi2.ppf(1-alfa, M-n)
+    #print(chi2_cap, chi2_lim)
+    outlier_pos = 0
+    if(chi2_cap >= chi2_lim):
+        # take as the outlier the block that has the maximum estimated residual
+        max_i = 0
+        for i in first_raw:
+            if abs(max(vk_cap[i])) > max_i:
+              max_i= abs(max(vk_cap[i]))
+              outlier_pos = i
+
+    else:
+        outlier_pos = 999
+    return outlier_pos
+
+
